@@ -1,17 +1,18 @@
 name: FLINT Reporting Docker Images CI/CD
 
 on:
-  schedule:
-    - cron: "0 0 * * MON"
+  workflow_dispatch:
+#   schedule:
+#     - cron: "0 0 * * MON"
 
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches: [master]
+#   pull_request:
+#     types: [opened, synchronize, reopened, ready_for_review]
+#     branches: [master]
 
-  push:
-    branches: [ master ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+#   push:
+#     branches: [ master ]
+#     # Publish semver tags as releases.
+#     tags: [ 'v*.*.*' ]
 
 env:
   REGISTRY: ghcr.io
