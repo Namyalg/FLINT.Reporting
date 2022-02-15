@@ -85,11 +85,11 @@ jobs:
       fail-fast: false
       matrix:
         services:
-#           - accountabilities
-#           - accountability-rules
-#           - accountability-types
-#           - conversion-and-remaining-periods
-#           - cover-types
+          - accountabilities
+          - accountability-rules
+          - accountability-types
+          - conversion-and-remaining-periods
+          - cover-types
           - crf-tables
           - data-aggregator
           - data-processor
