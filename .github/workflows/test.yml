@@ -1,0 +1,33 @@
+name: FLINT Reporting Docker Images CI/CD
+
+on:
+  schedule:
+    - cron: "0 0 * * MON"
+
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [master]
+
+  push:
+    branches: [ master ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  publish-reporting-tool-frontend:
+    name: Publish Reporting Tool (client)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - uses: azure/container-scan@v0
+        with:
+          image-name: ghcr.io/moja-global/flint_reporting.client:master
