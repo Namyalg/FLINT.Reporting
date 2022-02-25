@@ -18,41 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Cache Docker layers
-        uses: actions/cache@v2
+      - uses: azure/container-scan@v0
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-client-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-client-
-    
-
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/moja-global/flint_reporting.client
-
-      - name: Build Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: ./code/client/
-          file: "./code/client/Dockerfile"
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
-      - name: check images
-        run: |
-          docker images
-
-#       - uses: azure/container-scan@v0
-#         with:
-#           image-name: ${{ env.REGISTRY }}/moja-global/flint_reporting.client:master
+          image-name: ${{ env.REGISTRY }}/moja-global/flint_reporting.client:master
 
       # This ugly bit is necessary if you don't want your cache to grow forever
       # till it hits GitHub's limit of 5GB.
